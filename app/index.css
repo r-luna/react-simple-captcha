@@ -1,0 +1,9 @@
+.captcha .verify {
+  margin: 12px 0;
+}
+.captcha .reload-btn-wrapper:hover {
+  cursor: pointer;
+}
+.captcha .incorrect {
+  border-color: #dc3545 !important;
+}
