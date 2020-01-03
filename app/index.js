@@ -31,15 +31,9 @@ class App extends React.Component {
           <Card>
             <Captcha
               preamble="Prove you're not a robot:"
+              postamble="You're human!!"
               onValid={this.captchaValidated}
-              size={9}
-              ignoreChars="abcdefghijklmnopqrstuvwxyz"
-              noise={5}
-              color="false"
-              bg="cc9966"
-              width={300}
-              height={90}
-              fontSize={60}
+              size={5}
             />
           </Card>
           </Col>

@@ -21,6 +21,8 @@ class Captcha extends React.Component {
       isSolved: null,
       answerAttempted: false,
       preamble: '',
+      postamble: '',
+      size: 0,
     };
     this.isloaded = false;
   }
@@ -51,8 +53,10 @@ class Captcha extends React.Component {
   }
 
   componentDidMount = () => {
-    const { preamble } = this.props;
+    const { preamble, postamble, size } = this.props;
     this.setState({preamble});
+    this.setState({postamble});
+    this.setState({size});
     this.isloaded = true;
     this.getCaptcha();
   }
@@ -90,7 +94,7 @@ class Captcha extends React.Component {
 
   render() {
     const {
-      svg, verifyText, isSolved, answerAttempted, preamble,
+      svg, verifyText, isSolved, answerAttempted, preamble, postamble, size,
     } = this.state;
     return (
       <Container className="captcha">
@@ -108,7 +112,7 @@ class Captcha extends React.Component {
               <Input
                 onChange={this.handleFieldChange}
                 placeholder=""
-                maxLength={4}
+                maxLength={size}
                 id="verifyText"
                 value={verifyText}
                 // eslint-disable-next-line no-mixed-operators
@@ -134,19 +138,21 @@ class Captcha extends React.Component {
         </Row>
         <Row>
           <Col className="verify">
-            { !isSolved
-              && (
-                <Button
-                  variant="outline-primary"
-                  onClick={this.verify}
-                >
-                  Verify
-                </Button>
-              )}
-            {
-              isSolved
-              && (<p>You&apos;re human!!</p>)
-            }
+            <p>
+              { !isSolved
+                && (
+                  <Button
+                    variant="outline-primary"
+                    onClick={this.verify}
+                  >
+                    Verify
+                  </Button>
+                )}
+              {
+                isSolved
+                && ( postamble )
+              }
+            </p>
           </Col>
         </Row>
       </Container>
@@ -156,19 +162,21 @@ class Captcha extends React.Component {
 
 Captcha.defaultProps = {
   preamble: '',
+  postamble: '',
   onValid: null,
   size: 4,
   width: 150,
   height: 50,
   fontSize: 70,
-  ignoreChars: '',
+  ignoreChars: 'false',
   noise: 1,
   color: 'false',
-  bg: 'ffffff',
+  bg: 'false',
 };
 
 Captcha.propTypes = {
   preamble: PropTypes.string,
+  postamble: PropTypes.string,
   onValid: PropTypes.func,
   size: PropTypes.number,
   width: PropTypes.number,

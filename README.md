@@ -4,9 +4,9 @@ A two-part React Captcha consisting of (1) a back-end service written in Express
 
 NOTE: The Captcha font being used creates lower-case "L" and upper case "I" that both look the same - essentialy a character that looks like a pipe in either case. Its easy to mistake the rendering for either one of these letters. This sample repo relies on the `svg-captcha` package - visit its documentation to learn how to select a different font and how to set additional options.
 
-As well, a Captcha of any length can be generated. I've chosen 4 characters and provided no prop to customize it. Anyway, you would need to let the backing service know you want more than 4 characters, and update the component's input field to allow the desired number of chars.
+That aside, many of `svg-captcha`'s options are exposed via route params.
 
-In any event, this is a working example and everything can be evolved from here.
+The solution to the captcha is send back along with the svg in an exposed access control header.
 
 # Running the example
 
@@ -30,8 +30,56 @@ Visit http://localhost:3000
 
 Takes a single `onValid` prop which accepts your custom function to be fired when the captcha has been successfully validated.
 
-## Services
+### Props
 
-> GET localhost:3000/captcha
+The Props mirror the Route params detailed further below with the exception of this brief list:
 
-Returns an SVG captcha image with the captcha solution sent via a "captcha" header (Access-Control-Expose-Headers). The solution is grabbed from the header and kept in state. User input is then compared against the solution when the "verify" button is clicked.
+| Prop       | Type   | Default          | Description |
+| ----------- | ------ | ---------------- | ----------- |
+| preamble    | string | (empty string)   | Text to appear before the solution input box |
+| postamble   | string | (empty string)   | Text to appear should the captcha be solved, replacing the "verifY' button |
+| onValid     | func   | null             | The callback to be called upon succesfully solving the captcha |
+
+Otherwise look to the route param table for additional props as those params directly match their prop counterparts.
+
+Here's a complete component example:
+
+```javascript
+<Captcha
+  preamble="Prove you're not a robot:"
+  postamble="You're human!"
+  onValid={this.captchaValidated}
+  size={9}
+  ignoreChars="abcdefghijklmnopqrstuvwxyz"
+  noise={5}
+  color="false"
+  bg="cc9966"
+  width={300}
+  height={90}
+  fontSize={60}
+/>
+```
+
+The above example shows, via `ignoreChars`, that all letters will be upper-case since lower-case letters are dissallowed (ignored).
+
+## Service
+
+> GET localhost:3000/captcha/:size/:width/:height/:fontSize/:ignoreChars/:noise/:color/:bg
+
+Returns an SVG captcha image with the captcha solution sent via a "captcha" header (Access-Control-Expose-Headers).
+
+The route params exposes the options object used to configure the `svg-captcha` module which is responsible for delivering the resulting captcha. Note
+that the defaults are imposed by the component, not by the service.
+
+### Route Params
+
+| Param       | Type   | Default          | Description |
+| ----------- | ------ | ---------------- | ----------- |
+| size        | number | 4                | The number of captcha characters |
+| width       | number | 150              | Width of captcha in pixels |
+| height      | number | 50               | Height of the captcha in pixels |
+| fontSize    | number | 70               | Font size |
+| ignoreChars | string | (empty string)   | Specifies characters to not be included in the captcha string generation. For example, if you wanted a captcha comprised of only letters you would provide `0123456789` here. Case matters here, to omit lower-case `abc` will result in only upper-case versions of `abc` appearing, if at all. |
+| noise       | number | 1                | Number of lines to be drawn horizontaly through the captcha image |
+| color       | string | 'false'          | The string `true` or `false` to indicate if the captcha characters should use random colors. |
+| bg          | string | 'ffffff'         | Hexadecimal background color, preceeding hash (#) omitted. If this is set `color` is turned on, regardless of the `color` value or presence therof. |
