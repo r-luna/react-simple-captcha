@@ -77,7 +77,7 @@ that the defaults are imposed by the component, not by the service.
 | width       | number | 150              | Width of captcha in pixels |
 | height      | number | 50               | Height of the captcha in pixels |
 | fontSize    | number | 70               | Font size |
-| ignoreChars | string | (empty string)   | Specifies characters to not be included in the captcha string generation. For example, if you wanted a captcha comprised of only letters you would provide `0123456789` here. Case matters here, to omit lower-case `abc` will result in only upper-case versions of `abc` appearing, if at all. |
+| ignoreChars | string | (empty string)   | Specifies characters to not be included in the captcha string generation. For example, if you wanted a captcha comprised of only letters you would provide `0123456789` here. Case matters here, so to omit lower-case `abc` simply supply those lower-case letters and only the upper-case versions of `abc` would be capable of appearing. |
 | noise       | number | 1                | Number of lines to be drawn horizontaly through the captcha image |
 | color       | string | 'false'          | The string `true` or `false` to indicate if the captcha characters should use random colors. |
 | bg          | string | 'ffffff'         | Hexadecimal background color, preceeding hash (#) omitted. If this is set `color` is turned on, regardless of the `color` value or presence therof. |
