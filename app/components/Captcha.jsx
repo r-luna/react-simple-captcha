@@ -20,6 +20,7 @@ class Captcha extends React.Component {
       answerText: '',
       isSolved: null,
       answerAttempted: false,
+      preamble: '',
     };
     this.isloaded = false;
   }
@@ -29,9 +30,10 @@ class Captcha extends React.Component {
     if (isSolved) {
       return;
     }
+    const { size, ignoreChars, noise, color, bg, width, height, fontSize, } = this.props;
     this.setState({ answerAttempted: false });
     this.setState({ verifyText: '' });
-    axios.get('/captcha', {
+    axios.get(`/captcha/${size}/${width}/${height}/${fontSize}/${ignoreChars}/${noise}/${color}/${bg}`, {
       cancelToken: source.token,
     })
       .then((response) => {
@@ -49,6 +51,8 @@ class Captcha extends React.Component {
   }
 
   componentDidMount = () => {
+    const { preamble } = this.props;
+    this.setState({preamble});
     this.isloaded = true;
     this.getCaptcha();
   }
@@ -86,7 +90,7 @@ class Captcha extends React.Component {
 
   render() {
     const {
-      svg, verifyText, isSolved, answerAttempted,
+      svg, verifyText, isSolved, answerAttempted, preamble,
     } = this.state;
     return (
       <Container className="captcha">
@@ -97,7 +101,9 @@ class Captcha extends React.Component {
         </Row>
         <Row>
           <Col>
-            <p>Prove you&apos;re not a robot:</p>
+            { preamble.length !== 0 &&
+              (<p>{preamble}</p>)
+            }
             <InputGroup>
               <Input
                 onChange={this.handleFieldChange}
@@ -149,11 +155,29 @@ class Captcha extends React.Component {
 }
 
 Captcha.defaultProps = {
+  preamble: '',
   onValid: null,
+  size: 4,
+  width: 150,
+  height: 50,
+  fontSize: 70,
+  ignoreChars: '',
+  noise: 1,
+  color: 'false',
+  bg: 'ffffff',
 };
 
 Captcha.propTypes = {
+  preamble: PropTypes.string,
   onValid: PropTypes.func,
+  size: PropTypes.number,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  fontSize: PropTypes.number,
+  ignoreChars: PropTypes.string,
+  noise: PropTypes.number,
+  color: PropTypes.string,
+  bg: PropTypes.string,
 };
 
 export default Captcha;

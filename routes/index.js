@@ -9,9 +9,14 @@ router.get('/', function(req, res, next) {
 });
 
 /* CAPTCHA generator service */
-router.get('/captcha', async (req, res, next) => {
+router.get('/captcha/:size/:width/:height/:fontSize/:ignoreChars/:noise/:color/:bg', async (req, res, next) => {
   try {
-    const captcha = await svgCaptcha.create();
+    const { size, width, height, fontSize, ignoreChars, noise, color, bg } = req.params;
+    const options = {
+      size, width, height, fontSize, ignoreChars, noise, color,
+      background: `#${bg}`
+    };
+    const captcha = await svgCaptcha.create(req.params);
     res.append('captcha', captcha.text);
     res.append('Access-Control-Expose-Headers','captcha');
     res.type('svg');

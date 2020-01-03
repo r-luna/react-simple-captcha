@@ -29,7 +29,18 @@ class App extends React.Component {
           <Col sm={6}>
           &nbsp;
           <Card>
-            <Captcha onValid={this.captchaValidated}/>
+            <Captcha
+              preamble="Prove you're not a robot:"
+              onValid={this.captchaValidated}
+              size={9}
+              ignoreChars="abcdefghijklmnopqrstuvwxyz"
+              noise={5}
+              color="false"
+              bg="cc9966"
+              width={300}
+              height={90}
+              fontSize={60}
+            />
           </Card>
           </Col>
         </Row>
