@@ -6,7 +6,7 @@ NOTE: The Captcha font being used creates lower-case "L" and upper case "I" that
 
 That aside, many of `svg-captcha`'s options are exposed via route params.
 
-The solution to the captcha is send back along with the svg in an exposed access control header.
+When the SVG is generated the solution is sent back along with it via an exposed access control header.
 
 # Running the example
 
@@ -27,8 +27,6 @@ Visit http://localhost:3000
 # Moving parts
 
 ## React Component
-
-Takes a single `onValid` prop which accepts your custom function to be fired when the captcha has been successfully validated.
 
 ### Props
 
