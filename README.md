@@ -62,14 +62,13 @@ The above example shows, via `ignoreChars`, that all letters will be upper-case 
 
 ## Service
 
-> GET localhost:3000/captcha/:size/:width/:height/:fontSize/:ignoreChars/:noise/:color/:bg
+> POST localhost:3000/captcha/
 
-Returns an SVG captcha image with the captcha solution sent via a "captcha" header (Access-Control-Expose-Headers).
+Upon recieving a JSON payload returns an SVG captcha image with the captcha solution sent via a "captcha" header (Access-Control-Expose-Headers).
 
-The route params exposes the options object used to configure the `svg-captcha` module which is responsible for delivering the resulting captcha. Note
-that the defaults are imposed by the component, not by the service.
+Defaults are imposed by the service.
 
-### Route Params
+### Props
 
 | Param       | Type   | Default          | Description |
 | ----------- | ------ | ---------------- | ----------- |
@@ -81,3 +80,13 @@ that the defaults are imposed by the component, not by the service.
 | noise       | number | 1                | Number of lines to be drawn horizontaly through the captcha image |
 | color       | string | 'false'          | The string `true` or `false` to indicate if the captcha characters should use random colors. |
 | bg          | string | 'ffffff'         | Hexadecimal background color, preceeding hash (#) omitted. If this is set `color` is turned on, regardless of the `color` value or presence therof. |
+
+### Sample Payload
+
+```javascript
+{
+  "size": 5,
+  "noise": 2,
+  "color": "true"
+}
+```
