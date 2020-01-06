@@ -16,7 +16,7 @@ router.post('/captcha', async (req, res, next) => {
       width = 150,
       height = 50,
       fontSize = 70,
-      ignoreChars,
+      ignoreChars = 'lI', // these chars look identical with the default font, so ignore them
       noise = 1,
       color,
       bg,

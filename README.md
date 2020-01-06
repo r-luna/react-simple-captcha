@@ -2,7 +2,7 @@
 
 A two-part React Captcha consisting of (1) a back-end service written in Express for generating an SVG captcha and (2) a React component which displays and handles user interaction. Uses Bootstrap.
 
-NOTE: The Captcha font being used creates lower-case "L" and upper case "I" that both look the same - essentialy a character that looks like a pipe. Its easy to mistake the rendering for either one of these letters. This sample repo relies on the `svg-captcha` package - visit its documentation to learn how to select a different font.
+NOTE: The Captcha font being used creates lower-case "L" and upper case "I" that both look the same - essentialy a character that looks like a pipe. Its easy to mistake the rendering for either one of these letters. We resolve this issue with the default font by ignoring those characters via the `ignoreChars` prop by default. By supplying a value you undo this unless you include the work-around. Understand that this sample repo relies on the `svg-captcha` package - visit its documentation to learn how to select a different font if so desired.
 
 That aside, many of `svg-captcha`'s options are implimented via the React component.
 
@@ -76,7 +76,7 @@ Defaults are imposed by the service.
 | width       | number | 150              | Width of captcha in pixels |
 | height      | number | 50               | Height of the captcha in pixels |
 | fontSize    | number | 70               | Font size |
-| ignoreChars | string | (empty string)   | Specifies characters to not be included in the captcha string generation. For example, if you wanted a captcha comprised of only letters you would provide `0123456789` here. Case matters here, so to omit lower-case `abc` simply supply those lower-case letters and only the upper-case versions of `abc` would be capable of appearing. |
+| ignoreChars | string | 'lI'   | Specifies characters to not be included in the captcha string generation. For example, if you wanted a captcha comprised of only letters you would provide `0123456789` here. Case matters here, so to omit lower-case `abc` simply supply those lower-case letters and only the upper-case versions of `abc` would be capable of appearing. "l" and "I" are ignored by default because they look the smae when rendered by the deault font.|
 | noise       | number | 1                | Number of lines to be drawn horizontaly through the captcha image |
 | color       | string | 'false'          | The string `true` or `false` to indicate if the captcha characters should use random colors. |
 | bg          | string | 'ffffff'         | Hexadecimal background color, preceeding hash (#) omitted. If this is set `color` is turned on, regardless of the `color` value or presence therof. |
