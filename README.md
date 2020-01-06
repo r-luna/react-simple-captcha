@@ -2,11 +2,11 @@
 
 A two-part React Captcha consisting of (1) a back-end service written in Express for generating an SVG captcha and (2) a React component which displays and handles user interaction. Uses Bootstrap.
 
-NOTE: The Captcha font being used creates lower-case "L" and upper case "I" that both look the same - essentialy a character that looks like a pipe in either case. Its easy to mistake the rendering for either one of these letters. This sample repo relies on the `svg-captcha` package - visit its documentation to learn how to select a different font and how to set additional options.
+NOTE: The Captcha font being used creates lower-case "L" and upper case "I" that both look the same - essentialy a character that looks like a pipe. Its easy to mistake the rendering for either one of these letters. This sample repo relies on the `svg-captcha` package - visit its documentation to learn how to select a different font.
 
-That aside, many of `svg-captcha`'s options are exposed via route params.
+That aside, many of `svg-captcha`'s options are implimented via the React component.
 
-When the SVG is generated the solution is sent back along with it via an exposed access control header.
+When the SVG is generated the solution is sent back along with it via an exposed access control header. Not that you have to impliment anything as its all been done for you, but thats how everything works.
 
 # Running the example
 
@@ -30,7 +30,7 @@ Visit http://localhost:3000
 
 ### Props
 
-The Props mirror the Route params detailed further below with the exception of this brief list:
+The Props largely mirror the JSON payload detailed further below with the exception of this brief list:
 
 | Prop       | Type   | Default          | Description |
 | ----------- | ------ | ---------------- | ----------- |
@@ -38,7 +38,7 @@ The Props mirror the Route params detailed further below with the exception of t
 | postamble   | string | (empty string)   | Text to appear should the captcha be solved, replacing the "verifY' button |
 | onValid     | func   | null             | The callback to be called upon succesfully solving the captcha |
 
-Otherwise look to the JSON payload table for additional props as they directly match their prop counterparts.
+Otherwise look to the JSON prop table for additional props.
 
 Here's a complete component example:
 
@@ -46,7 +46,7 @@ Here's a complete component example:
 <Captcha
   preamble="Prove you're not a robot:"
   postamble="You're human!"
-  onValid={this.captchaValidated}
+  onValid={this.yourCustomFunctionHere}
   size={9}
   ignoreChars="abcdefghijklmnopqrstuvwxyz"
   noise={5}
