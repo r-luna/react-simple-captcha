@@ -9,19 +9,28 @@ router.get('/', function(req, res, next) {
 });
 
 /* CAPTCHA generator service */
-router.get('/captcha/:size/:width/:height/:fontSize/:ignoreChars/:noise/:color/:bg', async (req, res, next) => {
+router.post('/captcha', async (req, res, next) => {
   try {
-    const { size, width, height, fontSize, ignoreChars, noise, color, bg } = req.params;
+    const {
+      size = 4,
+      width = 150,
+      height = 50,
+      fontSize = 70,
+      ignoreChars,
+      noise = 1,
+      color,
+      bg,
+    } = req.body;
     const options = {
       size, width, height, fontSize, noise,
     };
-    if (ignoreChars !== 'false') {
+    if (ignoreChars) {
       options.ignoreChars = ignoreChars;
     }
-    if (color === 'true') { // presence of this prop turns on color
+    if (color) {
       options.color = color;
     }
-    if (bg !== 'false') { // presence of this prop turns on color
+    if (bg) { // presence of this prop turns on color
       options.background = `#${bg}`;
     }
     console.log(options);
