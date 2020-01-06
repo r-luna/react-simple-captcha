@@ -38,7 +38,7 @@ The Props mirror the Route params detailed further below with the exception of t
 | postamble   | string | (empty string)   | Text to appear should the captcha be solved, replacing the "verifY' button |
 | onValid     | func   | null             | The callback to be called upon succesfully solving the captcha |
 
-Otherwise look to the route param table for additional props as those params directly match their prop counterparts.
+Otherwise look to the JSON payload table for additional props as they directly match their prop counterparts.
 
 Here's a complete component example:
 
