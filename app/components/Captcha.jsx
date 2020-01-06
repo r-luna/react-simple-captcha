@@ -35,7 +35,8 @@ class Captcha extends React.Component {
     const { size, ignoreChars, noise, color, bg, width, height, fontSize, } = this.props;
     this.setState({ answerAttempted: false });
     this.setState({ verifyText: '' });
-    axios.get(`/captcha/${size}/${width}/${height}/${fontSize}/${ignoreChars}/${noise}/${color}/${bg}`, {
+    axios.post(`/captcha/`, {
+      size, ignoreChars, noise, color, bg, width, height, fontSize,
       cancelToken: source.token,
     })
       .then((response) => {
@@ -164,14 +165,14 @@ Captcha.defaultProps = {
   preamble: '',
   postamble: '',
   onValid: null,
-  size: 4,
-  width: 150,
-  height: 50,
-  fontSize: 70,
-  ignoreChars: 'false',
-  noise: 1,
-  color: 'false',
-  bg: 'false',
+  size: undefined,
+  width: undefined,
+  height: undefined,
+  fontSize: undefined,
+  ignoreChars: undefined,
+  noise: undefined,
+  color: undefined,
+  bg: undefined,
 };
 
 Captcha.propTypes = {
